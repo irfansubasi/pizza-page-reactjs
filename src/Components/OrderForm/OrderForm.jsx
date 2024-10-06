@@ -150,14 +150,14 @@ export default function OrderForm() {
           </CustomGroup>
           <Divider />
           <Row>
-            <Col md={6}>
+            <Col md={4}>
               <InputGroup>
                 <CustomButton>-</CustomButton>
                 <CustomInput value={1} readOnly style={{ padding: '1rem' }} />
                 <CustomButton>+</CustomButton>
               </InputGroup>
             </Col>
-            <Col md={6}>
+            <Col md={8}>
               <Card>
                 <CardBody style={{ padding: '2rem' }}>
                   <CardTitle tag="h5">Sipariş Toplamı</CardTitle>
