@@ -22,6 +22,7 @@ import {
   ingredientPrice,
   pizzaSizePrices,
 } from '../../data/priceData';
+import axios from 'axios';
 
 const MainLabel = styled(Label)`
   font-weight: 600;
@@ -126,8 +127,16 @@ export default function OrderForm() {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   }
 
-  function handleClick(e) {
+  function handleSubmit(e) {
     e.preventDefault();
+    axios
+      .post('https://reqres.in/api/orderedpizzas', formData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   function calculatePrice() {
@@ -146,7 +155,7 @@ export default function OrderForm() {
   return (
     <section className="form-section">
       <div className="form-content formpage-container">
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Row>
             <Col md={6}>
               <CustomGroup>
@@ -221,6 +230,7 @@ export default function OrderForm() {
               name="fullName"
               placeholder="Minimum 3 harf olmak üzere lütfen ad soyadınızı girin"
               type="text"
+              onChange={handleChange}
             />
           </CustomGroup>
           <CustomGroup>
@@ -230,6 +240,7 @@ export default function OrderForm() {
               name="note"
               placeholder="Siparişine eklemek istediğin bir not var mı?"
               type="textarea"
+              onChange={handleChange}
             />
           </CustomGroup>
           <Divider />
