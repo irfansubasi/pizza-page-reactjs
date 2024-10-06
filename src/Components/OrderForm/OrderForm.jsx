@@ -16,6 +16,12 @@ import styled from 'styled-components';
 import './OrderForm.css';
 import { useState } from 'react';
 import { doughTypes, sizes, toppings } from '../../data/optionsData';
+import {
+  doughTypePrices,
+  foodPrices,
+  ingredientPrice,
+  pizzaSizePrices,
+} from '../../data/priceData';
 
 const MainLabel = styled(Label)`
   font-weight: 600;
@@ -76,6 +82,67 @@ const CustomInput = styled(Input)`
 `;
 
 export default function OrderForm() {
+  const [formData, setFormData] = useState({
+    food: 'AbsolutePizza',
+    size: sizes[0].value,
+    dough: doughTypes[0].value,
+    extras: [],
+    fullName: '',
+    note: '',
+  });
+
+  const [quantity, setQuantity] = useState(1);
+
+  function handleChange(e) {
+    const { name, value, type, checked } = e.target;
+
+    if (type === 'checkbox') {
+      if (checked) {
+        setFormData({
+          ...formData,
+          extras: [...formData.extras, value],
+        });
+      } else {
+        setFormData({
+          ...formData,
+          extras: formData.extras.filter((topping) => topping !== value), //
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+
+    console.log(formData);
+  }
+
+  function increaseQuantity() {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  }
+
+  function decreaseQuantity() {
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  }
+
+  function handleClick(e) {
+    e.preventDefault();
+  }
+
+  function calculatePrice() {
+    let totalPrice = 0;
+
+    totalPrice =
+      (foodPrices[formData.food] +
+        pizzaSizePrices[formData.size] +
+        doughTypePrices[formData.dough] +
+        formData.extras.length * ingredientPrice) *
+      quantity;
+
+    return totalPrice.toFixed(2);
+  }
+
   return (
     <section className="form-section">
       <div className="form-content formpage-container">
@@ -88,8 +155,15 @@ export default function OrderForm() {
                 </MainLabel>
                 {sizes.map((size, index) => (
                   <RadioGroup check key={index}>
-                    <Input name="size" type="radio" value={size} />
-                    <InputLabel check>{size}</InputLabel>
+                    <Input
+                      id="size"
+                      name="size"
+                      type="radio"
+                      value={size.value}
+                      onChange={handleChange}
+                      checked={formData.size === size.value}
+                    />
+                    <InputLabel check>{size.label}</InputLabel>
                   </RadioGroup>
                 ))}
               </CustomGroup>
@@ -99,11 +173,16 @@ export default function OrderForm() {
                 <MainLabel for="dough">
                   Hamur Seç <LabelSpan>*</LabelSpan>
                 </MainLabel>
-                <Input id="dough" name="dough" type="select">
-                  <option value="">Hamur Kalınlığı</option>
+                <Input
+                  onChange={handleChange}
+                  id="dough"
+                  name="dough"
+                  type="select"
+                  value={formData.dough}
+                >
                   {doughTypes.map((dough, index) => (
-                    <option key={index} value={dough}>
-                      {dough}
+                    <option key={index} value={dough.value}>
+                      {dough.label}
                     </option>
                   ))}
                 </Input>
@@ -120,7 +199,12 @@ export default function OrderForm() {
                 <CheckboxGrid>
                   {toppings.map((topping, index) => (
                     <FormGroup check key={index}>
-                      <Input type="checkbox" name={topping.name} />
+                      <Input
+                        onChange={handleChange}
+                        type="checkbox"
+                        name={topping.name}
+                        value={topping.name}
+                      />
                       <Label check>{topping.name}</Label>
                     </FormGroup>
                   ))}
@@ -152,9 +236,13 @@ export default function OrderForm() {
           <Row>
             <Col md={4}>
               <InputGroup>
-                <CustomButton>-</CustomButton>
-                <CustomInput value={1} readOnly style={{ padding: '1rem' }} />
-                <CustomButton>+</CustomButton>
+                <CustomButton onClick={decreaseQuantity}>-</CustomButton>
+                <CustomInput
+                  value={quantity}
+                  readOnly
+                  style={{ padding: '1rem' }}
+                />
+                <CustomButton onClick={increaseQuantity}>+</CustomButton>
               </InputGroup>
             </Col>
             <Col md={8}>
@@ -164,11 +252,13 @@ export default function OrderForm() {
                   <CardText className="mt-4">
                     <CardTextDiv style={{ color: 'var(--grey-light-color)' }}>
                       <p>Seçimler</p>
-                      <p>25.00₺</p>
+                      <p>
+                        {(formData.extras.length * ingredientPrice).toFixed(2)}₺
+                      </p>
                     </CardTextDiv>
                     <CardTextDiv style={{ color: 'var(--red-color)' }}>
                       <p>Toplam</p>
-                      <p>110.00₺</p>
+                      <p>{calculatePrice()}₺</p>
                     </CardTextDiv>
                   </CardText>
                 </CardBody>
