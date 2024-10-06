@@ -1,6 +1,14 @@
-export const sizes = ['Küçük', 'Orta', 'Büyük'];
+export const sizes = [
+  { label: 'Küçük', value: 'Small' },
+  { label: 'Orta', value: 'Medium' },
+  { label: 'Büyük', value: 'Large' },
+];
 
-export const doughTypes = ['Kalın', 'Orta', 'İnce'];
+export const doughTypes = [
+  { label: 'İnce', value: 'Thin' },
+  { label: 'Orta', value: 'Regular' },
+  { label: 'Kalın', value: 'Thick' },
+];
 
 export const toppings = [
   { name: 'Pepperoni' },
