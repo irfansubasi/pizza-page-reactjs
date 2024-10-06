@@ -1,19 +1,11 @@
+import MiniHeader from '../Components/MiniHeader/MiniHeader';
 import OrderForm from '../Components/OrderForm/OrderForm';
 import './OrderPage.css';
 
 export default function OrderPage() {
   return (
     <>
-      <header className="header-section">
-        <div className="header-content formpage-container">
-          <img src="/Assets/Iteration-1-assets/logo.svg" alt="logo" />
-          <nav>
-            <a href="#">Anasayfa</a>
-            <span> - </span>
-            <a href="#">Sipariş Oluştur</a>
-          </nav>
-        </div>
-      </header>
+      <MiniHeader />
       <main>
         <section className="details-section">
           <div class="details-content formpage-container">
