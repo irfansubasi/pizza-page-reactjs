@@ -1,5 +1,6 @@
 import MiniHeader from '../Components/MiniHeader/MiniHeader';
 import OrderForm from '../Components/OrderForm/OrderForm';
+import { foodPrices } from '../data/priceData';
 import './OrderPage.css';
 
 export default function OrderPage() {
@@ -11,7 +12,7 @@ export default function OrderPage() {
           <div class="details-content formpage-container">
             <h3>Position Absolute Acı Pizza</h3>
             <div class="stats">
-              <p class="price">60₺</p>
+              <p class="price">{foodPrices.AbsolutePizza}₺</p>
               <div class="reviews">
                 <p>4.9</p>
                 <p>(200)</p>
