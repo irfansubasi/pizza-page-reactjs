@@ -1,6 +1,6 @@
-import MiniHeader from '../Components/MiniHeader/MiniHeader';
-import OrderForm from '../Components/OrderForm/OrderForm';
-import { foodPrices } from '../data/priceData';
+import OrderForm from '../../Components/OrderForm/OrderForm';
+import MiniHeader from '../../Components/MiniHeader/MiniHeader';
+import { foodPrices } from '../../data/priceData';
 import './OrderPage.css';
 
 export default function OrderPage() {
