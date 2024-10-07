@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 import styled from 'styled-components';
 import './OrderForm.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { doughTypes, sizes, toppings } from '../../data/optionsData';
 import {
   doughTypePrices,
@@ -23,6 +23,8 @@ import {
   pizzaSizePrices,
 } from '../../data/priceData';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MainLabel = styled(Label)`
   font-weight: 600;
@@ -94,6 +96,12 @@ export default function OrderForm() {
 
   const [quantity, setQuantity] = useState(1);
 
+  const [error, setError] = useState(true);
+
+  useEffect(() => {
+    validateForm();
+  }, [formData]);
+
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
 
@@ -115,8 +123,16 @@ export default function OrderForm() {
         [name]: value,
       });
     }
+  }
 
-    console.log(formData);
+  function validateForm() {
+    if (formData.extras.length < 4 || formData.extras.length > 10) {
+      setError(true);
+    } else if (formData.fullName.length < 3) {
+      setError(true);
+    } else {
+      setError(false);
+    }
   }
 
   function increaseQuantity() {
@@ -201,7 +217,9 @@ export default function OrderForm() {
           <Row>
             <Col>
               <CustomGroup>
-                <MainLabel for="dough">Ek Malzemeler</MainLabel>
+                <MainLabel for="dough">
+                  Ek Malzemeler <LabelSpan>*</LabelSpan>
+                </MainLabel>
                 <p style={{ color: 'var(--grey-light-color)' }}>
                   En az 4, en fazla 10 malzeme seçebilirsiniz.
                 </p>
@@ -273,11 +291,12 @@ export default function OrderForm() {
                     </CardTextDiv>
                   </CardText>
                 </CardBody>
-                <CustomButton>SİPARİŞ VER</CustomButton>
+                <CustomButton disabled={error}>SİPARİŞ VER</CustomButton>
               </Card>
             </Col>
           </Row>
         </Form>
+        <ToastContainer />
       </div>
     </section>
   );

@@ -31,7 +31,6 @@
 }
 
 .italic-heading {
-  margin-top: 3rem;
   font-family: 'Satisfy', system-ui;
   color: var(--yellow-color);
   font-size: 2rem;
@@ -40,10 +39,18 @@
 .main-heading {
   font-weight: 300;
   text-transform: uppercase;
-  font-size: 7.7vh;
+  font-size: 4.7rem;
+  line-height: 1;
 }
 
 .header-btn {
+  background-color: var(--yellow-color);
+  color: var(--grey-dark-color);
+  font-weight: 600;
+}
+
+/*to crush bootstrap rules*/
+.header-btn:hover {
   background-color: var(--yellow-color);
   color: var(--grey-dark-color);
   font-weight: 600;
