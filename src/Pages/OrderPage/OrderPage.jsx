@@ -9,11 +9,11 @@ export default function OrderPage() {
       <MiniHeader />
       <main>
         <section className="details-section">
-          <div class="details-content formpage-container">
+          <div className="details-content formpage-container">
             <h3>Position Absolute Acı Pizza</h3>
-            <div class="stats">
-              <p class="price">{foodPrices.AbsolutePizza}₺</p>
-              <div class="reviews">
+            <div className="stats">
+              <p className="price">{foodPrices.AbsolutePizza}₺</p>
+              <div className="reviews">
                 <p>4.9</p>
                 <p>(200)</p>
               </div>
