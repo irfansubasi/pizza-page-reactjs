@@ -32,6 +32,10 @@ a {
   margin: 0 auto;
 }
 
+p {
+  margin: 0;
+}
+
 .btn {
   font-family: 'Barlow', system-ui;
   padding: 1rem 3rem;
@@ -42,4 +46,32 @@ a {
 
 .btn:hover {
   opacity: 0.8;
+}
+
+@media (max-width: 576px) {
+  .container {
+    max-width: 300px;
+  }
+
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
 }
