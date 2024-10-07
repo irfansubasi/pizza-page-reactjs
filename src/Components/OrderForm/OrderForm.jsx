@@ -25,6 +25,7 @@ import {
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const MainLabel = styled(Label)`
   font-weight: 600;
@@ -78,6 +79,10 @@ const CardTextDiv = styled.div`
   font-weight: 600;
 `;
 
+const CardTextOuterDiv = styled.div`
+  font-weight: 600;
+`;
+
 const CustomInput = styled(Input)`
   text-align: center;
   font-weight: 600;
@@ -97,6 +102,8 @@ export default function OrderForm() {
   const [quantity, setQuantity] = useState(1);
 
   const [error, setError] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     validateForm();
@@ -149,6 +156,7 @@ export default function OrderForm() {
       .post('https://reqres.in/api/orderedpizzas', formData)
       .then((res) => {
         console.log(res.data);
+        navigate('/success');
       })
       .catch((err) => {
         console.error(err);
@@ -220,7 +228,12 @@ export default function OrderForm() {
                 <MainLabel for="dough">
                   Ek Malzemeler <LabelSpan>*</LabelSpan>
                 </MainLabel>
-                <p style={{ color: 'var(--grey-light-color)' }}>
+                <p
+                  style={{
+                    color: 'var(--grey-light-color)',
+                    marginBottom: '2rem',
+                  }}
+                >
                   En az 4, en fazla 10 malzeme seçebilirsiniz.
                 </p>
                 <CheckboxGrid>
@@ -278,18 +291,18 @@ export default function OrderForm() {
               <Card>
                 <CardBody style={{ padding: '2rem' }}>
                   <CardTitle tag="h5">Sipariş Toplamı</CardTitle>
-                  <CardText className="mt-4">
+                  <CardTextOuterDiv className="mt-4">
                     <CardTextDiv style={{ color: 'var(--grey-light-color)' }}>
-                      <p>Seçimler</p>
-                      <p>
+                      <span>Seçimler</span>
+                      <span>
                         {(formData.extras.length * ingredientPrice).toFixed(2)}₺
-                      </p>
+                      </span>
                     </CardTextDiv>
                     <CardTextDiv style={{ color: 'var(--red-color)' }}>
-                      <p>Toplam</p>
-                      <p>{calculatePrice()}₺</p>
+                      <span>Toplam</span>
+                      <span>{calculatePrice()}₺</span>
                     </CardTextDiv>
-                  </CardText>
+                  </CardTextOuterDiv>
                 </CardBody>
                 <CustomButton disabled={error}>SİPARİŞ VER</CustomButton>
               </Card>
