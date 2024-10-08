@@ -51,13 +51,6 @@ const StyledLink = styled(Link)`
   background-color: var(--yellow-color);
   color: var(--grey-dark-color);
   font-weight: 600;
-
-  /*to crush bootstrap rules*/
-  &:hover {
-    background-color: var(--yellow-color);
-    color: var(--grey-dark-color);
-    font-weight: 600;
-  }
 `;
 
 export default function MainHeader() {
