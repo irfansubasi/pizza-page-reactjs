@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import OrderPage from './Pages/OrderPage/OrderPage';
 import SuccessPage from './Pages/SuccessPage/SuccessPage';

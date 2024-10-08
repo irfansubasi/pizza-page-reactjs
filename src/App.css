@@ -39,13 +39,13 @@ p {
 .btn {
   font-family: 'Barlow', system-ui;
   padding: 1rem 3rem;
-  border: none;
+  border: none !important;
   border-radius: 30px;
   cursor: pointer;
 }
 
 .btn:hover {
-  opacity: 0.8;
+  opacity: 0.8 !important;
 }
 
 @media (max-width: 576px) {
