@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
-  background-color: var(--white-color);
+  background-color: ${(props) => props.bgColor || 'var(--white-color)'};
 `;
 
 const MenuItems = styled.div`
@@ -74,9 +74,10 @@ const items = [
   },
 ];
 
-export default function Navbar() {
+export default function Navbar(props) {
+  const { bgColor } = props;
   return (
-    <Nav>
+    <Nav bgColor={bgColor}>
       <MenuItems className="container">
         {items.map((item, index) => (
           <StyledLink to="/order" id={item.id} key={index}>
