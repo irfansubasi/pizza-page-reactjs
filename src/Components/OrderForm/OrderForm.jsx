@@ -240,6 +240,7 @@ export default function OrderForm() {
                   {toppings.map((topping, index) => (
                     <FormGroup check key={index}>
                       <Input
+                        data-cy="checkbox"
                         onChange={handleChange}
                         type="checkbox"
                         name={topping.name}
@@ -257,6 +258,7 @@ export default function OrderForm() {
               Ad Soyad <LabelSpan>*</LabelSpan>
             </MainLabel>
             <Input
+              data-cy="nameinput"
               id="fullName"
               name="fullName"
               placeholder="Minimum 3 harf olmak üzere lütfen ad soyadınızı girin"
@@ -304,7 +306,9 @@ export default function OrderForm() {
                     </CardTextDiv>
                   </CardTextOuterDiv>
                 </CardBody>
-                <CustomButton disabled={error}>SİPARİŞ VER</CustomButton>
+                <CustomButton data-cy="submitbutton" disabled={error}>
+                  SİPARİŞ VER
+                </CustomButton>
               </Card>
             </Col>
           </Row>
