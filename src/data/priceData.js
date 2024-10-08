@@ -1,8 +1,8 @@
-const foodPrices = {
-  TerminalPizza: 110,
-  AbsolutePizza: 130,
-  ChickenBurger: 100,
-};
+const foodPrices = [
+  { name: 'Terminal Pizza', value: 110 },
+  { name: 'Position Absolute Acı Pizza', value: 130 },
+  { name: 'UseEffect Tavuklu Burger', value: 100 },
+];
 
 const pizzaSizePrices = {
   Small: 0, //The price shown on the menu is for small size
