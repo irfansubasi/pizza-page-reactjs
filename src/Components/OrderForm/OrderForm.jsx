@@ -1,16 +1,12 @@
 import {
   Button,
-  Card,
   CardBody,
-  CardText,
   CardTitle,
-  Col,
   Form,
   FormGroup,
   Input,
   InputGroup,
   Label,
-  Row,
 } from 'reactstrap';
 import styled from 'styled-components';
 import './OrderForm.css';
@@ -32,21 +28,14 @@ const MainLabel = styled(Label)`
   font-size: 1.2rem;
 `;
 
-const InputLabel = styled(Label)`
-  font-weight: 500;
-  color: var(--grey-light-color);
-  margin-left: 1rem;
-`;
-
 const LabelSpan = styled.span`
   color: var(--red-color);
 `;
 
-const RadioGroup = styled(FormGroup)`
-  margin-top: 1rem;
-`;
-
 const CustomGroup = styled(FormGroup)`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   margin-top: 3rem !important;
 `;
 
@@ -70,7 +59,12 @@ const CustomButton = styled(Button)`
   font-weight: 600;
   font-size: 1.2rem;
   padding: 1rem;
-  flex: 1;
+
+  &:disabled {
+    cursor: default;
+    color: var(--white-color);
+    background-color: var(--grey-light-color);
+  }
 `;
 
 const CardTextDiv = styled.div`
@@ -89,14 +83,65 @@ const CustomInput = styled(Input)`
   font-size: 1.2rem;
 `;
 
+const FlexGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CustomRadioGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const CustomRadioLabel = styled.label`
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--beige-color);
+  color: var(--grey-light-color);
+  border: none;
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  input[type='radio']:checked + & {
+    background-color: var(--yellow-color);
+    border: 2px solid var(--dark-yellow-color);
+    color: var(--white-color);
+  }
+`;
+
+const CustomSelect = styled.select`
+  padding: 1rem 1rem;
+  background-color: var(--beige-color);
+  color: var(--grey-light-color);
+  width: 200px;
+  border: none;
+  outline: none;
+`;
+
+const CustomCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: var(--grey-light-color);
+  background-color: var(--beige-color);
+  border: 1px solid hsla(0, 0%, 50%, 0.2);
+  border-radius: 5px;
+`;
+
 export default function OrderForm() {
   const [formData, setFormData] = useState({
-    food: 'AbsolutePizza',
+    food: 'Position Absolute Acı Pizza',
     size: sizes[0].value,
     dough: doughTypes[0].value,
     extras: [],
     fullName: '',
     note: '',
+    extrasPrice: '',
+    price: '',
   });
 
   const [quantity, setQuantity] = useState(1);
@@ -107,6 +152,7 @@ export default function OrderForm() {
 
   useEffect(() => {
     validateForm();
+    calculatePrice();
   }, [formData]);
 
   function handleChange(e) {
@@ -156,7 +202,7 @@ export default function OrderForm() {
       .post('https://reqres.in/api/orderedpizzas', formData)
       .then((res) => {
         console.log(res.data);
-        navigate('/success');
+        navigate('/success', { state: { formData } });
       })
       .catch((err) => {
         console.error(err);
@@ -165,94 +211,110 @@ export default function OrderForm() {
 
   function calculatePrice() {
     let totalPrice = 0;
+    const selectedFood = foodPrices.find((food) => food.name === formData.food);
+    const foodPrice = selectedFood ? selectedFood.value : 0;
 
     totalPrice =
-      (foodPrices[formData.food] +
+      (foodPrice +
         pizzaSizePrices[formData.size] +
         doughTypePrices[formData.dough] +
         formData.extras.length * ingredientPrice) *
       quantity;
 
-    return totalPrice.toFixed(2);
+    let extrasPrice = formData.extras.length * ingredientPrice;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      extrasPrice: extrasPrice.toFixed(2),
+    }));
+
+    setFormData((prevData) => ({
+      ...prevData,
+      price: totalPrice.toFixed(2),
+    }));
   }
 
   return (
     <section className="form-section">
       <div className="form-content formpage-container">
         <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col md={6}>
-              <CustomGroup>
-                <MainLabel for="size">
-                  Boyut Seç <LabelSpan>*</LabelSpan>
-                </MainLabel>
+          <FlexGroup>
+            <CustomGroup>
+              <MainLabel for="size">
+                Boyut Seç <LabelSpan>*</LabelSpan>
+              </MainLabel>
+              <CustomRadioGroup check>
                 {sizes.map((size, index) => (
-                  <RadioGroup check key={index}>
+                  <div key={index}>
                     <Input
-                      id="size"
+                      style={{ display: 'none' }}
+                      id={size.label}
                       name="size"
                       type="radio"
                       value={size.value}
                       onChange={handleChange}
                       checked={formData.size === size.value}
                     />
-                    <InputLabel check>{size.label}</InputLabel>
-                  </RadioGroup>
+                    <CustomRadioLabel htmlFor={size.label} check>
+                      {size.label}
+                    </CustomRadioLabel>
+                  </div>
                 ))}
-              </CustomGroup>
-            </Col>
-            <Col md={6}>
-              <CustomGroup>
-                <MainLabel for="dough">
-                  Hamur Seç <LabelSpan>*</LabelSpan>
-                </MainLabel>
-                <Input
-                  onChange={handleChange}
-                  id="dough"
-                  name="dough"
-                  type="select"
-                  value={formData.dough}
-                >
-                  {doughTypes.map((dough, index) => (
-                    <option key={index} value={dough.value}>
-                      {dough.label}
-                    </option>
-                  ))}
-                </Input>
-              </CustomGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <CustomGroup>
-                <MainLabel for="dough">
-                  Ek Malzemeler <LabelSpan>*</LabelSpan>
-                </MainLabel>
-                <p
-                  style={{
-                    color: 'var(--grey-light-color)',
-                    marginBottom: '2rem',
-                  }}
-                >
-                  En az 4, en fazla 10 malzeme seçebilirsiniz.
-                </p>
-                <CheckboxGrid>
-                  {toppings.map((topping, index) => (
-                    <FormGroup check key={index}>
-                      <Input
-                        data-cy="checkbox"
-                        onChange={handleChange}
-                        type="checkbox"
-                        name={topping.name}
-                        value={topping.name}
-                      />
-                      <Label check>{topping.name}</Label>
-                    </FormGroup>
-                  ))}
-                </CheckboxGrid>
-              </CustomGroup>
-            </Col>
-          </Row>
+              </CustomRadioGroup>
+            </CustomGroup>
+            <CustomGroup>
+              <MainLabel for="dough">
+                Hamur Seç <LabelSpan>*</LabelSpan>
+              </MainLabel>
+              <CustomSelect
+                onChange={handleChange}
+                id="dough"
+                name="dough"
+                type="select"
+                value={formData.dough}
+              >
+                {doughTypes.map((dough, index) => (
+                  <option key={index} value={dough.value}>
+                    {dough.label}
+                  </option>
+                ))}
+              </CustomSelect>
+            </CustomGroup>
+          </FlexGroup>
+          <CustomGroup>
+            <MainLabel for="dough">
+              Ek Malzemeler <LabelSpan>*</LabelSpan>
+            </MainLabel>
+            <p
+              style={{
+                color: 'var(--grey-light-color)',
+                marginBottom: '2rem',
+              }}
+            >
+              En az 4, en fazla 10 malzeme seçebilirsiniz.
+            </p>
+            <CheckboxGrid>
+              {toppings.map((topping, index) => (
+                <FormGroup check key={index}>
+                  <div className="custom-checkbox">
+                    <Input
+                      className="checkbox"
+                      style={{ display: 'none' }}
+                      id={topping.label}
+                      data-cy="checkbox"
+                      onChange={handleChange}
+                      type="checkbox"
+                      name={topping.name}
+                      value={topping.name}
+                    />
+                    <Label for={topping.label} check>
+                      {topping.name}
+                    </Label>
+                  </div>
+                </FormGroup>
+              ))}
+            </CheckboxGrid>
+          </CustomGroup>
           <CustomGroup>
             <MainLabel for="fullName">
               Ad Soyad <LabelSpan>*</LabelSpan>
@@ -277,41 +339,40 @@ export default function OrderForm() {
             />
           </CustomGroup>
           <Divider />
-          <Row>
-            <Col md={4}>
-              <InputGroup>
-                <CustomButton onClick={decreaseQuantity}>-</CustomButton>
-                <CustomInput
-                  value={quantity}
-                  readOnly
-                  style={{ padding: '1rem' }}
-                />
-                <CustomButton onClick={increaseQuantity}>+</CustomButton>
-              </InputGroup>
-            </Col>
-            <Col md={8}>
-              <Card>
-                <CardBody style={{ padding: '2rem' }}>
-                  <CardTitle tag="h5">Sipariş Toplamı</CardTitle>
-                  <CardTextOuterDiv className="mt-4">
-                    <CardTextDiv style={{ color: 'var(--grey-light-color)' }}>
-                      <span>Seçimler</span>
-                      <span>
-                        {(formData.extras.length * ingredientPrice).toFixed(2)}₺
-                      </span>
-                    </CardTextDiv>
-                    <CardTextDiv style={{ color: 'var(--red-color)' }}>
-                      <span>Toplam</span>
-                      <span>{calculatePrice()}₺</span>
-                    </CardTextDiv>
-                  </CardTextOuterDiv>
-                </CardBody>
-                <CustomButton data-cy="submitbutton" disabled={error}>
-                  SİPARİŞ VER
-                </CustomButton>
-              </Card>
-            </Col>
-          </Row>
+          <div className="results">
+            <InputGroup className="quantity-group">
+              <CustomButton onClick={decreaseQuantity}>-</CustomButton>
+              <CustomInput
+                value={quantity}
+                readOnly
+                style={{ padding: '1rem' }}
+              />
+              <CustomButton onClick={increaseQuantity}>+</CustomButton>
+            </InputGroup>
+            <CustomCard>
+              <CardBody style={{ padding: '2rem' }}>
+                <CardTitle tag="h5">Sipariş Toplamı</CardTitle>
+                <CardTextOuterDiv style={{ margin: '1rem 0' }}>
+                  <CardTextDiv
+                    style={{
+                      color: 'var(--grey-light-color)',
+                      marginBottom: '1rem',
+                    }}
+                  >
+                    <span>Seçimler</span>
+                    <span>{formData.extrasPrice}₺</span>
+                  </CardTextDiv>
+                  <CardTextDiv style={{ color: 'var(--red-color)' }}>
+                    <span>Toplam</span>
+                    <span>{formData.price}₺</span>
+                  </CardTextDiv>
+                </CardTextOuterDiv>
+              </CardBody>
+              <CustomButton data-cy="submitbutton" disabled={error}>
+                SİPARİŞ VER
+              </CustomButton>
+            </CustomCard>
+          </div>
         </Form>
         <ToastContainer />
       </div>
