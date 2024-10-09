@@ -5,15 +5,15 @@ const foodPrices = [
 ];
 
 const pizzaSizePrices = {
-  Small: 0, //The price shown on the menu is for small size
-  Medium: 50,
-  Large: 60,
+  S: 0, //The price shown on the menu is for small size
+  M: 50,
+  L: 60,
 };
 
 const doughTypePrices = {
-  Thin: 20,
-  Regular: 0, // No extra charge for regular crust
-  Thick: 25,
+  İnce: 0, // No extra charge for regular crust
+  Orta: 20,
+  Kalın: 25,
 };
 
 const ingredientPrice = 10;
