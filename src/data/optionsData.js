@@ -6,8 +6,8 @@ export const sizes = [
 
 export const doughTypes = [
   { label: 'İnce', value: 'İnce' },
-  { label: 'Orta', value: 'Regular' },
-  { label: 'Kalın', value: 'Thick' },
+  { label: 'Orta', value: 'Orta' },
+  { label: 'Kalın', value: 'Kalın' },
 ];
 
 export const toppings = [
