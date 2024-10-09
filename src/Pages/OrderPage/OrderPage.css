@@ -35,12 +35,16 @@
 
 .details-section {
   font-family: 'Barlow', system-ui;
+  padding-bottom: 3rem;
 }
 
 .details-content {
-  margin-top: 3rem;
   display: flex;
   flex-direction: column;
+}
+
+.details-content .banner {
+  margin-bottom: 3rem;
 }
 
 .details-content h3 {

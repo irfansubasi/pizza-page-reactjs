@@ -75,7 +75,7 @@ export default function MenuSection() {
           <ItalicHeading>en çok paketlenen menüler</ItalicHeading>
           <MainMenuHeading>Acıktıran Kodlara Doyuran Lezzetler</MainMenuHeading>
         </MenuHeadings>
-        <Navbar bgColor={'var(--beige-color)'} />
+        <Navbar bgcolor={'var(--beige-color)'} />
         <MenuCards>
           {items &&
             items.map((item, index) => (
