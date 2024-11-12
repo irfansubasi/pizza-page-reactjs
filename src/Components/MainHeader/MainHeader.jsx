@@ -1,71 +1,24 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import Logo from '/Assets/Iteration-1-assets/logo.svg';
-
-const HeaderSection = styled.header`
-  background: url(/Assets/Iteration-1-assets/home-banner.png);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 3rem;
-`;
-
-const HeaderContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #ffffff;
-  max-width: 550px;
-  gap: 3.5rem;
-`;
-
-const HeaderLogo = styled.img`
-  width: 20rem;
-  height: auto;
-`;
-
-const HeaderHeadings = styled.div`
-  text-align: center;
-`;
-
-const ItalicHeading = styled.p`
-  font-family: 'Satisfy', system-ui;
-  color: var(--yellow-color);
-  font-size: 2rem;
-`;
-
-const MainHeading = styled.p`
-  font-weight: 300;
-  text-transform: uppercase;
-  font-size: 4.7rem;
-  line-height: 1;
-`;
-
-const StyledLink = styled(Link)`
-  background-color: var(--yellow-color);
-  color: var(--grey-dark-color);
-  font-weight: 600;
-`;
+import Logo from '../../assets/images/logo.svg';
 
 export default function MainHeader() {
   return (
-    <HeaderSection>
-      <HeaderContent>
-        <HeaderLogo src={Logo} />
-        <HeaderHeadings>
-          <ItalicHeading>fırsatı kaçırma</ItalicHeading>
-          <MainHeading>kod acıktırır pizza, doyurur</MainHeading>
-        </HeaderHeadings>
-        <StyledLink className="btn header-btn" to="/order">
+    <header className="bg-[url('../../assets/images/home-banner.png')] bg-cover bg-center bg-no-repeat h-screen flex flex-col justify-start items-center p-12">
+      <div className="container mx-auto flex flex-col justify-center items-center text-white max-w-sm lg:max-w-xl gap-[2rem] md:gap-6 lg:gap-20">
+        <img src={Logo} alt="Logo" className="w-80 h-auto" />
+        <div className="text-center">
+          <p className="font-satisfy text-yellowC text-2xl">fırsatı kaçırma</p>
+          <p className="font-roboto font-light uppercase text-[4.7rem] leading-none">
+            kod acıktırır pizza, doyurur
+          </p>
+        </div>
+        <Link
+          to="/order"
+          className="bg-yellowC text-greyDarkC font-barlow font-semibold py-3 px-12 rounded-full hover:opacity-80"
+        >
           ACIKTIM
-        </StyledLink>
-      </HeaderContent>
-    </HeaderSection>
+        </Link>
+      </div>
+    </header>
   );
 }

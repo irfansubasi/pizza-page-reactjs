@@ -1,11 +1,10 @@
 import OrderCard from './OrderCard/OrderCard';
-import './OrderCards.css';
 
 export default function OrderCards() {
   return (
-    <section className="card-section">
-      <div className="container">
-        <div className="cards">
+    <section className="card-section my-12">
+      <div className="container mx-auto px-11 lg:px-48">
+        <div className="cards flex flex-wrap flex-col lg:flex-row items-stretch justify-center gap-2">
           <OrderCard
             title={
               <>
@@ -14,24 +13,24 @@ export default function OrderCards() {
                 Lezzetus
               </>
             }
-            className="card-1"
+            className="bg-[url('../../assets/images/cta/kart-1.png')] bg-cover bg-center bg-no-repeat text-whiteC"
             headingLevel="h1"
             subtitle="Position: Absolute Acı Burger"
           />
-          <div className="mini-cards">
+          <div className="flex-1 flex flex-col gap-2">
             <OrderCard
               title="Hackathlon Burger Menü"
-              className="card-2"
+              className="bg-[url('../../assets/images/cta/kart-2.png')] bg-cover bg-center bg-no-repeat text-whiteC"
               headingLevel="h3"
             />
             <OrderCard
               title={
                 <>
-                  <span className="card-3-span">Çoooook</span> hızlı npm gibi
+                  <span className="text-redC">Çoooook</span> hızlı npm gibi
                   kurye
                 </>
               }
-              className="card-3"
+              className="bg-[url('../../assets/images/cta/kart-3.png')] bg-cover bg-center bg-no-repeat text-greyDarkC"
               headingLevel="h3"
             />
           </div>

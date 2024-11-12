@@ -1,44 +1,11 @@
-import styled from 'styled-components';
 import Navbar from '../Navbar/Navbar';
 import MenuCard from './MenuCard/MenuCard';
 import { foodPrices } from '../../data/priceData';
 
-const MenuSectionStyled = styled.section`
-  margin-bottom: 3rem;
-`;
-
-const MenuHeadings = styled.div`
-  text-align: center;
-`;
-
-const ItalicHeading = styled.p`
-  color: var(--red-color);
-  font-family: 'Satisfy', serif;
-  font-size: 2rem;
-`;
-
-const MainMenuHeading = styled.p`
-  font-family: 'Barlow', system-ui;
-  font-weight: 600;
-  font-size: 2.2rem;
-  color: var(--grey-dark-color);
-`;
-
-const MenuCards = styled.div`
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  font-family: 'Barlow', system-ui;
-  font-weight: 600;
-  color: var(--grey-dark-color);
-`;
-
 const items = [
   {
     id: 'terminal',
-    src: '../../../Assets/Iteration-2-aseets/pictures/food-1.png',
+    src: '../../assets/images/food-1.png',
     title: 'Terminal Pizza',
     score: '4.9',
     review: '(200)',
@@ -47,7 +14,7 @@ const items = [
   },
   {
     id: 'absolute',
-    src: '../../../Assets/Iteration-2-aseets/pictures/food-2.png',
+    src: '../../assets/images/food-2.png',
     title: 'Position Absolute Acı Pizza',
     score: '4.2',
     review: '(186)',
@@ -57,7 +24,7 @@ const items = [
   },
   {
     id: 'burger',
-    src: '../../../Assets/Iteration-2-aseets/pictures/food-3.png',
+    src: '../../assets/images/food-3.png',
     title: 'UseEffect Tavuklu Burger',
     score: '5.0',
     review: '(250)',
@@ -69,14 +36,18 @@ const items = [
 
 export default function MenuSection() {
   return (
-    <MenuSectionStyled>
-      <div className="container">
-        <MenuHeadings>
-          <ItalicHeading>en çok paketlenen menüler</ItalicHeading>
-          <MainMenuHeading>Acıktıran Kodlara Doyuran Lezzetler</MainMenuHeading>
-        </MenuHeadings>
-        <Navbar bgcolor={'var(--beige-color)'} />
-        <MenuCards>
+    <section className="mb-12">
+      <div className="container mx-auto">
+        <div className="text-center px-11 lg:px-48">
+          <p className="text-redC font-satisfy text-2xl">
+            en çok paketlenen menüler
+          </p>
+          <p className="font-barlow font-semibold text-4xl text-greyDarkC">
+            Acıktıran Kodlara Doyuran Lezzetler
+          </p>
+        </div>
+        <Navbar bgcolor={'bg-beigeC'} />
+        <div className="mt-8 flex justify-center flex-col lg:flex-row flex-wrap gap-x-10 gap-y-6 font-barlow font-semibold text-greyDarkC px-11 lg:px-48">
           {items &&
             items.map((item, index) => (
               <MenuCard
@@ -89,8 +60,8 @@ export default function MenuSection() {
                 price={item.price}
               />
             ))}
-        </MenuCards>
+        </div>
       </div>
-    </MenuSectionStyled>
+    </section>
   );
 }

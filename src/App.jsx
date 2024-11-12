@@ -1,7 +1,7 @@
-import './App.css';
+import './index.css';
+import './fonts/fonts.css';
 import OrderPage from './Pages/OrderPage/OrderPage';
 import SuccessPage from './Pages/SuccessPage/SuccessPage';
-import MainHeader from './Components/MainHeader/MainHeader';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './Pages/HomePage/HomePage';
 

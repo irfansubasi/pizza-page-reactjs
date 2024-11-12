@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --yellow-color: #fdc913;
+  --grey-light-color: #5f5f5f;
+  --grey-dark-color: #292929;
+  --red-color: #ce2829;
+  --beige-color: #faf7f2;
+  --white-color: #ffffff;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--beige-color);
+}

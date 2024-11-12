@@ -1,4 +1,3 @@
-import logo from '../../../Assets/Iteration-1-assets/logo.svg';
 import styled from 'styled-components';
 import Footer from '../../Components/Footer/Footer';
 import { useLocation } from 'react-router-dom';
